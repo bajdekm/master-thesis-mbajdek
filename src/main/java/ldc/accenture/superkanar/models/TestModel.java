@@ -12,8 +12,30 @@ public class TestModel {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String name;
-    private String dupa;
+    private Integer someNumber;
+    private String randomString;
 
+    public TestModel(String name, Integer someNumber, String randomString) {
+        this.name = name;
+        this.someNumber = someNumber;
+        this.randomString = randomString;
+    }
+
+    public Integer getSomeNumber() {
+        return someNumber;
+    }
+
+    public void setSomeNumber(Integer someNumber) {
+        this.someNumber = someNumber;
+    }
+
+    public String getRandomString() {
+        return randomString;
+    }
+
+    public void setRandomString(String randomString) {
+        this.randomString = randomString;
+    }
 
     public Integer getId() {
         return id;
@@ -31,11 +53,4 @@ public class TestModel {
         this.name = name;
     }
 
-    public String getDupa() {
-        return dupa;
-    }
-
-    public void setDupa(String dupa) {
-        this.dupa = dupa;
-    }
 }
