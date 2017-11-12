@@ -1,4 +1,4 @@
-package ldc.accenture.superkanar.models;
+package pl.lodz.p.mgr.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +7,8 @@ import javax.persistence.Id;
 
 @Entity
 public class TestModel {
+    public TestModel() {
+    }
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

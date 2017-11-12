@@ -1,4 +1,4 @@
-package ldc.accenture.superkanar;
+package pl.lodz.p.mgr;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

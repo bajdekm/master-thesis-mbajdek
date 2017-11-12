@@ -1,8 +1,8 @@
-package ldc.accenture.superkanar.controllers;
+package pl.lodz.p.mgr.controllers;
 
-import ldc.accenture.superkanar.models.TestModel;
-import ldc.accenture.superkanar.services.TestModelService;
-import ldc.accenture.superkanar.utils.StringUtil;
+import pl.lodz.p.mgr.models.TestModel;
+import pl.lodz.p.mgr.services.TestModelService;
+import pl.lodz.p.mgr.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,18 @@ public class HomeController {
     private TestModelService testModelService;
     Random random = new Random();
 
-    @RequestMapping(value="/" , method = RequestMethod.GET)
+    @RequestMapping("/")
+    public String reqMap(){
+        return "welcome";
+    }
+
+    @RequestMapping("/da")
+    public String destroyAll(){
+        testModelService.destroyAllModels();
+        return "welcome";
+    }
+
+    @RequestMapping(value="/gen" , method = RequestMethod.GET)
     public String welcome(@RequestParam("num") int num){
         List<TestModel> testModels = new LinkedList<TestModel>();
 
@@ -34,12 +45,22 @@ public class HomeController {
             testModels.add(testModel);
         }
 
+        double startTime = System.currentTimeMillis();
         for (TestModel element : testModels) {
             testModelService.saveUserToDB(element);
 
         }
+        double stopTime = System.currentTimeMillis();
+        double elapsedTime = stopTime - startTime;
+        log.info("@@ time for "+ num+ " records : " + elapsedTime + "ms");
 
 
+        return "welcome";
+    }
+
+    @RequestMapping("/sa")
+    public String selectAll(){
+        testModelService.getAllRecords();
         return "welcome";
     }
 }
