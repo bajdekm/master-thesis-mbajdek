@@ -19,9 +19,9 @@ public class StatsFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         // empty
     }
-
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws IOException, ServletException {
         long time = System.currentTimeMillis();
         try {
             chain.doFilter(req, resp);
@@ -30,7 +30,6 @@ public class StatsFilter implements Filter {
             log.info("{}: {} ms ", ((HttpServletRequest) req).getRequestURI(),  time);
         }
     }
-
     @Override
     public void destroy() {
         // empty

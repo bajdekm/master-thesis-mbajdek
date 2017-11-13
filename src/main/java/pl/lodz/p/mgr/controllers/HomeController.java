@@ -1,25 +1,27 @@
 package pl.lodz.p.mgr.controllers;
 
-import pl.lodz.p.mgr.models.TestModel;
-import pl.lodz.p.mgr.services.TestModelService;
-import pl.lodz.p.mgr.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.lodz.p.mgr.models.Book;
+import pl.lodz.p.mgr.models.BookCategory;
+import pl.lodz.p.mgr.repo.BookCategoryRepository;
+import pl.lodz.p.mgr.utils.StringUtil;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 @Controller
 @Slf4j
 public class HomeController {
 
     @Autowired
-    private TestModelService testModelService;
+    BookCategoryRepository repository;
+
     Random random = new Random();
 
     @RequestMapping("/")
@@ -27,40 +29,28 @@ public class HomeController {
         return "welcome";
     }
 
-    @RequestMapping("/da")
-    public String destroyAll(){
-        testModelService.destroyAllModels();
-        return "welcome";
-    }
-
     @RequestMapping(value="/gen" , method = RequestMethod.GET)
     public String welcome(@RequestParam("num") int num){
-        List<TestModel> testModels = new LinkedList<TestModel>();
 
-        TestModel testModel = null;
-        for( int i = 0 ; i < num ; i++ ){
-            testModel = new TestModel(StringUtil.generateRandomString(10),
-                   random.nextInt(100),
-                    StringUtil.generateRandomString(40));
-            testModels.add(testModel);
+        BookCategory category = new BookCategory("FairyTale");
+        Set<Book> books = new HashSet<Book>();
+        for (int i = 0; i < num; i++) {
+            books.add( new Book(StringUtil.generateRandomString(15), category) );
         }
+        category.setBooks(books);
 
-        double startTime = System.currentTimeMillis();
-        for (TestModel element : testModels) {
-            testModelService.saveUserToDB(element);
+        repository.save(category);
 
-        }
-        double stopTime = System.currentTimeMillis();
-        double elapsedTime = stopTime - startTime;
-        log.info("@@ time for "+ num+ " records : " + elapsedTime + "ms");
+        return "welcome";
+    }
+
+    @RequestMapping("/del")
+    public String del(){
+        BookCategory cat = repository.findOne(1);
+        repository.delete(cat);
 
 
         return "welcome";
     }
 
-    @RequestMapping("/sa")
-    public String selectAll(){
-        testModelService.getAllRecords();
-        return "welcome";
-    }
 }
