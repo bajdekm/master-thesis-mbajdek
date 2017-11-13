@@ -1,5 +1,6 @@
 package pl.lodz.p.mgr.controllers;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.lodz.p.mgr.models.TestModel;
 import pl.lodz.p.mgr.services.TestModelService;
 import pl.lodz.p.mgr.utils.StringUtil;
@@ -62,5 +63,10 @@ public class HomeController {
     public String selectAll(){
         testModelService.getAllRecords();
         return "welcome";
+    }
+
+    @RequestMapping("/gj")
+    public @ResponseBody List<TestModel> getAllTMJSON(){
+        return testModelService.getAllTestModels();
     }
 }
