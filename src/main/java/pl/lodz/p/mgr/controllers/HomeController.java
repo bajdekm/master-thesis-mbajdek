@@ -32,7 +32,7 @@ public class HomeController {
     @RequestMapping(value="/gen" , method = RequestMethod.GET)
     public String welcome(@RequestParam("num") int num){
 
-        BookCategory category = new BookCategory("FairyTale");
+        BookCategory category = new BookCategory(StringUtil.generateRandomString(15));
         Set<Book> books = new HashSet<Book>();
         for (int i = 0; i < num; i++) {
             books.add( new Book(StringUtil.generateRandomString(15), category) );
