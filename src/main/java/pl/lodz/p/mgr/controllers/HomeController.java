@@ -75,6 +75,7 @@ public class HomeController {
     public void parseJson(@RequestBody List<TestModel> testModels){
         double startTime = System.currentTimeMillis();
         StringBuilder sb = new StringBuilder();
+
         for (TestModel element: testModels) {
             sb.append("name: " + element.getName() + " someString: " + element.getRandomString() + " some num: " + element.getSomeNumber() + " , ");
             testModelService.saveUserToDB(element);
@@ -82,6 +83,6 @@ public class HomeController {
        // log.info( sb.toString() );
         double stopTime = System.currentTimeMillis();
         double elapsedTime = stopTime - startTime;
-        log.info("@@ time elapsed: " + elapsedTime + "ms");
+        log.info("@@ time elapsed: " + elapsedTime + "ms for " + testModels.size() + " elements");
     }
 }
