@@ -1,15 +1,14 @@
 package pl.lodz.p.mgr.controllers;
 
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.mgr.models.TestModel;
 import pl.lodz.p.mgr.services.TestModelService;
 import pl.lodz.p.mgr.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.Random;
 @Controller
 @Slf4j
 public class HomeController {
+
 
     @Autowired
     private TestModelService testModelService;
@@ -68,5 +68,20 @@ public class HomeController {
     @RequestMapping("/gj")
     public @ResponseBody List<TestModel> getAllTMJSON(){
         return testModelService.getAllTestModels();
+    }
+
+    @RequestMapping(value = "/pj", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void parseJson(@RequestBody List<TestModel> testModels){
+        double startTime = System.currentTimeMillis();
+        StringBuilder sb = new StringBuilder();
+        for (TestModel element: testModels) {
+            sb.append("name: " + element.getName() + " someString: " + element.getRandomString() + " some num: " + element.getSomeNumber() + " , ");
+            testModelService.saveUserToDB(element);
+        }
+        log.info( sb.toString() );
+        double stopTime = System.currentTimeMillis();
+        double elapsedTime = stopTime - startTime;
+        log.info("@@ time elapsed: " + elapsedTime + "ms");
     }
 }
