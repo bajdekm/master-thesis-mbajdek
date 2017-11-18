@@ -42,7 +42,11 @@ public class HomeController {
         }
         category.setBooks(books);
 
-        repository.save(category);
+        repository.save(
+                new HashSet<BookCategory>() {{
+                    add(category);
+                }}
+        );
 
         return "welcome";
     }
