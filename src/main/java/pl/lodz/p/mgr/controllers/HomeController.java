@@ -44,9 +44,9 @@ public class HomeController {
         return "welcome";
     }
 
-    @RequestMapping("/del")
-    public String del(){
-        BookCategory cat = repository.findOne(1);
+    @RequestMapping(value = "/del", method = RequestMethod.GET)
+    public String del(@RequestParam("id") int id){
+        BookCategory cat = repository.findOne(id);
         repository.delete(cat);
 
 
