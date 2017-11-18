@@ -37,9 +37,6 @@ public class HomeController {
         for (int i = 0; i < num; i++) {
             books.add( new Book(StringUtil.generateRandomString(15), category) );
         }
-        for (Book b: books ) {
-            log.info(b.getName());
-        }
         category.setBooks(books);
 
         repository.save(
