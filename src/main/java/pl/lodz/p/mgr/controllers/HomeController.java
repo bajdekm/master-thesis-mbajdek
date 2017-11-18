@@ -79,7 +79,7 @@ public class HomeController {
             sb.append("name: " + element.getName() + " someString: " + element.getRandomString() + " some num: " + element.getSomeNumber() + " , ");
             testModelService.saveUserToDB(element);
         }
-        log.info( sb.toString() );
+       // log.info( sb.toString() );
         double stopTime = System.currentTimeMillis();
         double elapsedTime = stopTime - startTime;
         log.info("@@ time elapsed: " + elapsedTime + "ms");
