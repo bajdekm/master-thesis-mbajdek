@@ -31,7 +31,7 @@ public class HomeController {
 
     @RequestMapping(value="/gen" , method = RequestMethod.GET)
     public String welcome(@RequestParam("num") int num){
-
+        log.info("hello from book generator");
         BookCategory category = new BookCategory(StringUtil.generateRandomString(15));
         Set<Book> books = new HashSet<Book>();
         for (int i = 0; i < num; i++) {
