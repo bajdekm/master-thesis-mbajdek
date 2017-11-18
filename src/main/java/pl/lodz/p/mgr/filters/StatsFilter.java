@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component
-@WebFilter("/*")
-@Slf4j
+//@Component
+//@WebFilter("/*")
+//@Slf4j
 public class StatsFilter implements Filter {
 
     @Override
@@ -27,7 +27,7 @@ public class StatsFilter implements Filter {
             chain.doFilter(req, resp);
         } finally {
             time = System.currentTimeMillis() - time;
-            log.info("{}: {} ms ", ((HttpServletRequest) req).getRequestURI(),  time);
+            //log.info("{}: {} ms ", ((HttpServletRequest) req).getRequestURI(),  time);
         }
     }
 
